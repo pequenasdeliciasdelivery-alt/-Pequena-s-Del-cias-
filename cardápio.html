@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pequena's Delícias-Cardápio </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+        }
+        header {
+            background: #ffcc00;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            padding-top:170px;
+            
+            
+        }
+        
+        
+        
+        #mensagem {
+        width: 200px;
+        height: 80px;
+        justify-content: center;
+        display:flex;
+      align-items: center;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      margin: 5px;
+      margin-left:20%;
+      color: #ff5540;
+      border:solid 1px red;
+      border-radius: 15px;
+      box-shadow:1px 1px Black;
+    }
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+        .card {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin: 15px;
+            padding: 15px;
+            width: 350px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card img {
+            width: 100%;
+            border-radius: 12px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .cart {
+            background: #fff;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .formulario {
+            margin-top: 15px;
+        }
+        .formulario label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .formulario input, .formulario textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+        .formulario textarea {
+            resize: none;
+            height: 70px;
+        }
+        #logo{
+            width: 180px;
+            margin: 0;
+            
+        }
+        .logo{
+            position:fixed;
+            width: 100%;
+            background: #ffeaff;
+            display:flex;
+            z-index: 999;
+            border-bottom:solid 7px pink;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+   <img src="1758668747335.png" alt="logo"id="logo"> 
+   <div id="mensagem">Seja bem-vindo</div>
+   
+   </div>
+    <header> 🍴Cardápio 🍰</header>
+
+    <section class="menu">
+        <div class="card">
+            <img src="1758585628188.png" alt="Cuscuz">
+            <h3>Cuscuz</h3>
+            <p>Delicioso cuscuz de Tapioca</p>
+            <p><strong>R$ 8,00</strong></p>
+        <button onclick="addToCart('Cuscuz', 8)">Adicionar</button>
+        </div>
+
+        <div class="card">
+            <img src="MusseMaracujá.png" alt="Torta de Maracujá">
+            <h3>Torta de Maracujá</h3>
+            <p>Cremosa e refrescante</p>
+            <p><strong>R$ 8,00</strong></p>
+            <button onclick="addToCart('Torta de Maracujá', 8)">Adicionar</button>
+        </div>
+
+        <div class="card">
+            <img src="TortaLimao.png" alt="Torta de Limão">
+            <h3>Torta de Limão</h3>
+            <p>Equilíbrio perfeito entre doce e cítrico</p>
+            <p><strong>R$ 8,00</strong></p>
+            <button onclick="addToCart('Torta de Limão', 8)">Adicionar</button>
+        </div>
+    </section>
+
+    <section class="cart">
+        <h2>🛒 Carrinho</h2>
+        <ul id="cart-list"></ul>
+        <p><strong>Total: R$ <span id="total">0</span></strong></p>
+
+        <div class="formulario">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" placeholder="Digite seu nome" required>
+
+            <label for="endereco">Endereço/Observações:</label>
+            <textarea id="endereco" placeholder="Digite seu endereço ou observações"></textarea>
+        </div>
+
+        <button onclick="finalizarPedido()">Finalizar Pedido</button>
+    </section>
+
+    <script>
+        
+       const mensagem = document.getElementById("mensagem");
+
+    // Define as mensagens que vão alternar
+    const mensagens = ["Seja bem-vindo!", "Faça seu pedido!","Em breve ","promoções exclusivas","Encomendas  natalinas  Rabanada,tortas e muito mais  faça sua encomenda"];
+    let indice = 0;
+
+    // Função para alternar
+    setInterval(() => {
+      indice = (indice + 1) % mensagens.length;
+      mensagem.textContent = mensagens[indice];
+    }, 3000); // alterna a cada 2 segundos 
+        
+        
+        
+        
+        
+        let cart = [];
+        let total = 0;
+
+        function addToCart(item, price) {
+            cart.push({item, price});
+            total += price;
+            renderCart();
+        }
+
+        function renderCart() {
+            let list = document.getElementById('cart-list');
+            list.innerHTML = '';
+            cart.forEach(c => {
+                let li = document.createElement('li');
+                li.textContent = `${c.item} - R$ ${c.price}`;
+                list.appendChild(li);
+            });
+            document.getElementById('total').textContent = total;
+        }
+
+        function finalizarPedido() {
+            let nome = document.getElementById('nome').value.trim();
+            let endereco = document.getElementById('endereco').value.trim();
+
+            if (!nome) {
+                alert('Por favor, digite seu nome antes de finalizar o pedido.');
+                return;
+            }
+
+            if (cart.length === 0) {
+                alert('Seu carrinho está vazio!');
+                return;
+            }
+
+            let mensagem = `Olá, meu nome é ${nome}. Gostaria de pedir:%0A`;
+            cart.forEach(c => {
+                mensagem += `- ${c.item} (R$ ${c.price})%0A`;
+            });
+            mensagem += `%0ATotal: R$ ${total}%0A`;
+            if (endereco) mensagem += `%0AEndereço/Observações: ${endereco}`;
+
+            window.open(`https://wa.me/5521992537151?text=${mensagem}`, '_blank');
+        }
+    </script>
+</body>
+</html>

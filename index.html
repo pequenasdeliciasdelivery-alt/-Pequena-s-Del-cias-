@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pequena's Delícias</title>
+ 
+ <style>
+     footer{
+         position: absolute;
+         text-align: center;
+         margin-left:30%;
+         margin-top:99%;
+     }
+ </style> 
+</head>
+<body>
+   
+         <script>
+        // Função para redirecionar a página
+        function redirecionar() {
+            window.location.href = "cardápio.html"; // Substitua pelo URL de destino
+        }
+
+        // Função para exibir a imagem e iniciar o redirecionamento
+        function iniciarPagina() {
+            // Exibe a imagem
+            const img = document.createElement("img");
+            img.src ="1758462009698.png"; // Substitua com o caminho da sua imagem
+            img.alt = "Imagem Exemplo";
+            img.style.width="100%";
+            img.style.display = "block";
+            img.style.margin = "0 auto";
+            img.style.marginTop="50%";
+            document.body.appendChild(img);
+
+            // Redireciona após 5 segundos
+            setTimeout(redirecionar, 3500); // 3500 milissegundos = 3,5segundos
+        }
+
+        // A função será chamada quando a página carregar
+        window.onload = iniciarPagina;
+    </script>
+       <footer>Pequena's Delicias<br>2025</footer>
+</body>
+</html>
